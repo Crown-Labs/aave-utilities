@@ -1,4 +1,4 @@
-import { providers } from 'ethers';
+import { providers, BigNumber } from 'ethers';
 import { isAddress } from 'ethers/lib/utils';
 import { ReservesHelperInput, UserReservesHelperInput } from '../index';
 import { UiPoolDataProviderV3 } from './typechain/IUiPoolDataProviderV3';
@@ -125,6 +125,14 @@ export class UiPoolDataProvider implements UiPoolDataProviderInterface {
     return this._contract.getUserReservesData(lendingPoolAddressProvider, user);
   }
 
+  tryParseNumberValue(value: BigNumber): number {
+    try {
+      return value.toNumber();
+    } catch {
+      return 0;
+    }
+  }
+
   public async getReservesHumanized({
     lendingPoolAddressProvider,
   }: ReservesHelperInput): Promise<ReservesDataHumanized> {
@@ -184,7 +192,9 @@ export class UiPoolDataProvider implements UiPoolDataProviderInterface {
           accruedToTreasury: reserveRaw.accruedToTreasury.toString(),
           unbacked: reserveRaw.unbacked.toString(),
           isolationModeTotalDebt: reserveRaw.isolationModeTotalDebt.toString(),
-          debtCeilingDecimals: reserveRaw.debtCeilingDecimals.toNumber(),
+          debtCeilingDecimals: this.tryParseNumberValue(
+            reserveRaw.debtCeilingDecimals,
+          ),
           isSiloedBorrowing: reserveRaw.isSiloedBorrowing,
           flashLoanEnabled: reserveRaw.flashLoanEnabled,
           virtualAccActive,
