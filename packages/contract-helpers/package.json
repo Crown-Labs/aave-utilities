@@ -1,6 +1,6 @@
 {
-  "name": "@aave/contract-helpers",
-  "version": "1.33.1",
+  "name": "@kittycorn-labs/contract-helpers",
+  "version": "1.33.2",
   "sideEffects": false,
   "license": "MIT",
   "description": "",
@@ -14,7 +14,8 @@
     "test:watch": "cd ../.. && yarn test --watch packages/contract-helpers",
     "cover": "cd ../.. && yarn cover packages/contract-helpers",
     "commit": "cd ../.. && yarn commit",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "public": "yarn publish --access public"
   },
   "peerDependencies": {
     "bignumber.js": "^9.x",
